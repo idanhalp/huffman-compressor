@@ -20,19 +20,21 @@ struct Node
 
 	~Node()
 	{
+		if (is_leaf())
+		{
+			return;
+		}
+		
 		for (Node* child : {left, right})
 		{
-			const bool child_exists = child != nullptr;
-
-			if (child_exists)
-			{
-				delete child;
-				child = nullptr;
-			}
+			delete child;
+			child = nullptr;
 		}
 	}
 
 	auto operator>(const Node& other) const -> bool { return frequency > other.frequency; }
+
+	auto is_leaf() const -> bool { return character.has_value(); }
 };
 
 #endif // NODE_HPP
