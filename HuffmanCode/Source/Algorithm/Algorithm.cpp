@@ -2,10 +2,10 @@
 #include "Debug/Debug.hpp"
 #include "Node/Node.hpp"
 #include <limits>
+#include <memory>
 #include <queue>
 #include <ranges>
-#include <stdexcept>
-#include <utility>
+#include <span>
 #include <string>
 #include <vector>
 
@@ -15,31 +15,33 @@ namespace Algorithm::Auxiliary
 {
 	auto create_frequency_map(string_view text) -> frequency_map_t;
 	auto create_tree(const frequency_map_t& frequency_map) -> Node*;
-	auto find_letters_encodings(const Node* root) -> unordered_map<char, vector<bool>>;
+	auto find_letters_encodings(const frequency_map_t& frequency_map) -> unordered_map<char, vector<bool>>;
 	auto encode_to_bits(string_view original_text, const unordered_map<char, vector<bool>>& letters_encoding) -> vector<bool>;
 	auto encode_bits_as_characters(const vector<bool>& encoded_bits) -> vector<char>;
+	auto decode_bits_from_characters(span<const char> encoded_characters, size_t total_bits) -> vector<bool>;
+	auto decode_text_from_bits(const vector<bool>& encoded_bits, const Node* root) -> string;
 }
 
 auto Algorithm::encode(string_view original_text) -> EncodingInfo
 {
 	const frequency_map_t frequency_map = Auxiliary::create_frequency_map(original_text);
-	Node* root = Auxiliary::create_tree(frequency_map); // ! Use a std::unique_ptr.
-	const unordered_map<char, vector<bool>> letters_encodings = Auxiliary::find_letters_encodings(root);
+	const unordered_map<char, vector<bool>> letters_encodings = Auxiliary::find_letters_encodings(frequency_map);
 	const vector<bool> encoded_bits = Auxiliary::encode_to_bits(original_text, letters_encodings);	
 	const vector<char> encoded_characters = Auxiliary::encode_bits_as_characters(encoded_bits);
 
 	Debug::print_encoded_bits(encoded_bits);
 	Debug::print_encoded_characters(encoded_characters);
 
-	delete root;
-
 	return {encoded_characters, frequency_map, encoded_bits.size()};
 }
 
-auto Algorithm::decode([[maybe_unused]] const EncodingInfo& encoding_info) -> string
+auto Algorithm::decode(const EncodingInfo& encoding_info) -> string
 {
-	std::runtime_error("`Algorithm::decode` is not implemented yet!\n");
-	unreachable();
+	const vector<bool> encoded_bits = Auxiliary::decode_bits_from_characters(encoding_info.encoded_characters, encoding_info.total_bits);
+	const unique_ptr<Node> root(Auxiliary::create_tree(encoding_info.frequency_map));
+	const string original_text = Auxiliary::decode_text_from_bits(encoded_bits, root.get());
+
+	return original_text;
 }
 
 auto Algorithm::Auxiliary::create_frequency_map(string_view text) -> frequency_map_t
@@ -99,12 +101,13 @@ auto find_letters_encodings(const Node* root, unordered_map<char, vector<bool>>&
 	encoding.pop_back();
 }
 
-auto Algorithm::Auxiliary::find_letters_encodings(const Node* root) -> unordered_map<char, vector<bool>>
+auto Algorithm::Auxiliary::find_letters_encodings(const frequency_map_t& frequency_map) -> unordered_map<char, vector<bool>>
 {
 	unordered_map<char, vector<bool>> letters_encodings;
 	vector<bool> encoding;
+	unique_ptr<Node> root(create_tree(frequency_map));
 
-	find_letters_encodings(root, letters_encodings, encoding);
+	find_letters_encodings(root.get(), letters_encodings, encoding);
 
 	return letters_encodings;
 }
