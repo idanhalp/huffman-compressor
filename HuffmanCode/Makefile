@@ -3,8 +3,9 @@ COMPILER = g++
 COMPILER_FLAGS = -Wall -Wextra -pedantic -Werror -O3 -std=c++23
 
 SOURCE_FILES = \
-		Source/Algorithm/Algorithm.cpp\
 		Main.cpp\
+		Source/Algorithm/Algorithm.cpp\
+		Source/Algorithm/Debug/Debug.cpp\
 		Source/FileProcessing/FileProcessing.cpp
 
 OBJECT_FILES = $(SOURCE_FILES:.cpp=.o)
