@@ -4,6 +4,14 @@
 
 using namespace std;
 
+auto Debug::print_frequency_map(const Algorithm::frequency_map_t& frequency_map) -> void
+{
+	for (const auto [character, frequency] : frequency_map)
+	{
+		cout << character << ": " << frequency << '\n';
+	}
+}
+
 auto Debug::print_tree(const Node* root) -> void
 {
 	const auto print_node = [] (const Node* node)
