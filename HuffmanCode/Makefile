@@ -6,7 +6,9 @@ SOURCE_FILES = \
 		Main.cpp\
 		Source/Algorithm/Algorithm.cpp\
 		Source/Algorithm/Debug/Debug.cpp\
-		Source/FileProcessing/FileProcessing.cpp
+		Source/FileProcessing/FileProcessing.cpp\
+		Tests/RandomTests/RandomTests.cpp\
+		Tests/Tests.cpp
 
 OBJECT_FILES = $(SOURCE_FILES:.cpp=.o)
 
