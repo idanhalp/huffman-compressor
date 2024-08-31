@@ -2,12 +2,12 @@
 #define ALGORITHM_HPP
 
 #include <string_view>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 namespace Algorithm
 {
-	typedef std::unordered_map<char, int> frequency_map_t;
+	typedef std::map<char, int> frequency_map_t;
 	
 	struct EncodingInfo
 	{
