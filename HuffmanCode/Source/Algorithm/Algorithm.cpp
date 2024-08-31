@@ -1,5 +1,4 @@
 #include "Algorithm.hpp"
-#include "Debug/Debug.hpp"
 #include "Node/Node.hpp"
 #include <limits>
 #include <memory>
@@ -28,9 +27,6 @@ auto Algorithm::encode(string_view original_text) -> EncodingInfo
 	const unordered_map<char, vector<bool>> letters_encodings = Auxiliary::find_letters_encodings(frequency_map);
 	const vector<bool> encoded_bits = Auxiliary::encode_to_bits(original_text, letters_encodings);	
 	const vector<char> encoded_characters = Auxiliary::encode_bits_as_characters(encoded_bits);
-
-	Debug::print_encoded_bits(encoded_bits);
-	Debug::print_encoded_characters(encoded_characters);
 
 	return {encoded_characters, frequency_map, encoded_bits.size()};
 }
@@ -148,4 +144,52 @@ auto Algorithm::Auxiliary::encode_bits_as_characters(const vector<bool>& encoded
 	}
 
 	return encoded_characters;
+}
+
+auto Algorithm::Auxiliary::decode_bits_from_characters(span<const char> encoded_characters, size_t total_bits) -> vector<bool>
+{
+	vector<bool> encoded_bits;
+
+	const size_t bits_in_char = numeric_limits<char>::digits + 1;
+	encoded_bits.reserve(bits_in_char * encoded_characters.size());
+
+	for (const char character : encoded_characters)
+	{
+		const size_t msb_position = numeric_limits<char>::digits;
+
+		for (size_t bit_index = msb_position; bit_index != SIZE_MAX; --bit_index)
+		{
+			const bool bit_is_set = (character & (1 << bit_index));
+			encoded_bits.push_back(bit_is_set);
+		}
+	}
+
+	encoded_bits.resize(total_bits);
+
+	return encoded_bits;
+}
+
+auto Algorithm::Auxiliary::decode_text_from_bits(const vector<bool>& encoded_bits, const Node* root) -> string
+{
+	string result;
+
+	for (const Node* current = root; const bool bit : encoded_bits)
+	{
+		if (bit)
+		{
+			current = current->right;
+		}
+		else
+		{
+			current = current->left;
+		}
+
+		if (current->is_leaf())
+		{
+			result += current->character.value();
+			current = root;
+		}
+	}
+
+	return result;
 }
