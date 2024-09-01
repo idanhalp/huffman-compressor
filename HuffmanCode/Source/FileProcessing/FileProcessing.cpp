@@ -48,11 +48,14 @@ auto Processing::decode_from_file(string input_file_path) -> Algorithm::Encoding
 		char character;
 		int frequency;
 
-		input_stream >> character >> frequency;
+		input_stream.get(character); // Use get because character can be a whitespace.
+		input_stream >> frequency;
+
 		encoding_info.frequency_map[character] = frequency;
+		
+		input_stream.get(character); // Read the newline.
 	}
 
-	getline(input_stream, s);
 	getline(input_stream, s);
 	const int num_of_characters = stoi(s);
 
