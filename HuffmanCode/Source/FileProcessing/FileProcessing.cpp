@@ -10,7 +10,21 @@ namespace Processing::Auxiliary
 	auto write_characters_to_output_file(ofstream& output_stream, const vector<char> characters) -> void;
 }
 
-auto Processing::read_file(string input_file_path) -> Algorithm::EncodingInfo
+auto Processing::encode_into_file(std::string output_file_path, const Algorithm::EncodingInfo& encoding_info) -> void
+{
+	ofstream output_stream(output_file_path);
+
+	if (!output_stream.is_open())
+	{
+		throw runtime_error("Cannot write to " + output_file_path + "!\n");
+	}
+
+	output_stream << encoding_info.total_bits << '\n';
+	Auxiliary::write_frequency_map_to_output_file(output_stream, encoding_info.frequency_map);
+	Auxiliary::write_characters_to_output_file(output_stream, encoding_info.encoded_characters);
+}
+
+auto Processing::decode_from_file(string input_file_path) -> Algorithm::EncodingInfo
 {
 	ifstream input_stream(input_file_path);
 
@@ -49,20 +63,6 @@ auto Processing::read_file(string input_file_path) -> Algorithm::EncodingInfo
 	}
 
 	return encoding_info;
-}
-
-auto Processing::write_file(std::string output_file_path, const Algorithm::EncodingInfo& encoding_info) -> void
-{
-	ofstream output_stream(output_file_path);
-
-	if (!output_stream.is_open())
-	{
-		throw runtime_error("Cannot write to " + output_file_path + "!\n");
-	}
-
-	output_stream << encoding_info.total_bits << '\n';
-	Auxiliary::write_frequency_map_to_output_file(output_stream, encoding_info.frequency_map);
-	Auxiliary::write_characters_to_output_file(output_stream, encoding_info.encoded_characters);
 }
 
 auto Processing::Auxiliary::write_frequency_map_to_output_file(ofstream& output_stream, const Algorithm::frequency_map_t& frequency_map) -> void
