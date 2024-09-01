@@ -1,5 +1,6 @@
 #include "Source/Algorithm/Algorithm.hpp"
 #include "Source/FileProcessing/FileProcessing.hpp"
+#include <filesystem>
 #include <iostream>
 
 using namespace std;
@@ -25,6 +26,11 @@ auto main(const int argument_count, const char* arguments[]) -> int
 		const string content = Processing::read_from_file(source_file);
 		const Algorithm::EncodingInfo encoding_info = Algorithm::encode(content);
 		Processing::encode_into_file(destination_file, encoding_info);
+
+		const double compression_ratio = 1.0 * filesystem::file_size(destination_file) / filesystem::file_size(source_file);
+		const double data_rate_saving = 1.0 - compression_ratio;
+
+		cout << "Data rate saving is " << data_rate_saving << '\n';
 	}
 	else if (command == "decode")
 	{
