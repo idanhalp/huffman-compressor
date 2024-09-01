@@ -88,7 +88,7 @@ auto Algorithm::Auxiliary::create_tree(const frequency_map_t& frequency_map) -> 
 	return root;
 }
 
-auto find_letters_encodings(const Node* root, unordered_map<char, vector<bool>>& letters_encoding, vector<bool> encoding) -> void
+auto find_letters_encodings(const Node* root, unordered_map<char, vector<bool>>& letters_encoding, vector<bool>& encoding) -> void
 {
 	if (root->is_leaf())
 	{
