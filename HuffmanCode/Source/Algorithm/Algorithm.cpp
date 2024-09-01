@@ -63,6 +63,15 @@ auto Algorithm::Auxiliary::create_tree(const frequency_map_t& frequency_map) -> 
 		heap.push(new Node(frequency, character));
 	}
 
+	// Edge case:
+	// When the text contains a single character, an empty tree is created.
+	// A workaround is to add an additional node representing the character.
+	// The character will have 2 representations (`0` and `1`), but only one will be actually used.
+	if (frequency_map.size() == 1)
+	{
+		heap.push(new Node(heap.top()->frequency, heap.top()->character.value()));
+	}
+
 	while (heap.size() > 1)
 	{
 		Node* node_with_lowest_frequency = heap.top();

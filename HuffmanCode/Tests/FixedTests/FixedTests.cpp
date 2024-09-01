@@ -28,3 +28,9 @@ auto Tests::Fixed::run_read_from_file_test() -> bool
 
 	return text_decoded_successfully;
 }
+
+auto Tests::Fixed::run_encode_text_with_single_letter_test() -> bool
+{
+	const string original_text(1'000, 'a');
+	return Algorithm::decode(Algorithm::encode(original_text)) == original_text;
+}
