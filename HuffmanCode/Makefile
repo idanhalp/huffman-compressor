@@ -7,6 +7,7 @@ SOURCE_FILES = \
 		Source/Algorithm/Algorithm.cpp\
 		Source/Algorithm/Debug/Debug.cpp\
 		Source/FileProcessing/FileProcessing.cpp\
+		Tests/FixedTests/FixedTests.cpp\
 		Tests/RandomTests/RandomTests.cpp\
 		Tests/Tests.cpp
 
