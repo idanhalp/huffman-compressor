@@ -8,7 +8,7 @@ auto Debug::print_frequency_map(const Algorithm::frequency_map_t& frequency_map)
 {
 	for (const auto [character, frequency] : frequency_map)
 	{
-		cout << character << ": " << frequency << '\n';
+		cout << character << "(ASCII == " << static_cast<int>(character) << "): " << frequency << '\n';
 	}
 }
 
