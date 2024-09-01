@@ -1,5 +1,6 @@
 #include "FileProcessing.hpp"
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
 
 using namespace std;
@@ -63,6 +64,33 @@ auto Processing::decode_from_file(string input_file_path) -> Algorithm::Encoding
 	}
 
 	return encoding_info;
+}
+
+auto Processing::write_into_file(string output_file_path, string_view content) -> void
+{
+	ofstream output_stream(output_file_path);
+
+	if (!output_stream.is_open())
+	{
+		throw runtime_error("Cannot write to " + output_file_path + "!\n");
+	}
+
+	output_stream << content;
+}
+
+auto Processing::read_from_file(string input_file_path) -> string
+{
+	ifstream input_stream(input_file_path);
+
+	if (!input_stream.is_open())
+	{
+		throw runtime_error("Cannot open " + input_file_path + "!\n");
+	}
+	
+	stringstream string_buffer;
+	string_buffer << input_stream.rdbuf();
+
+	return string_buffer.str();
 }
 
 auto Processing::Auxiliary::write_frequency_map_to_output_file(ofstream& output_stream, const Algorithm::frequency_map_t& frequency_map) -> void
