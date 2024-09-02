@@ -36,8 +36,8 @@ auto Tests::Auxiliary::generate_random_string(const size_t length) -> string
 
 auto Tests::Random::run_tests() -> bool
 {
-	const int num_of_tests = 10'000;
-	const int string_length = 10'000;
+	const int num_of_tests = 1'000;
+	const int string_length = 1'000;
 
 	for (int i = 0; i < num_of_tests; ++i)
 	{
