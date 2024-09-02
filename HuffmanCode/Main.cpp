@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <iostream>
 #include <ranges>
+#include <string_view>
 
 using namespace std;
 
@@ -19,12 +20,12 @@ auto main(const int argument_count, const char* arguments[]) -> int
 		return EXIT_SUCCESS;
 	}
 
-	const string TEST_COMMAND = "test";
-	const string ENCODE_COMMAND = "encode";
-	const string DECODE_COMMAND = "decode";
-	const vector<string> COMMANDS = {TEST_COMMAND, ENCODE_COMMAND, DECODE_COMMAND};
+	const string_view TEST_COMMAND = "test";
+	const string_view ENCODE_COMMAND = "encode";
+	const string_view DECODE_COMMAND = "decode";
+	const vector<string_view> COMMANDS = {TEST_COMMAND, ENCODE_COMMAND, DECODE_COMMAND};
 
-	const string command = arguments[1];
+	const string_view command = arguments[1];
 	const bool is_legal_command = ranges::contains(COMMANDS, command);
 
 	if (!is_legal_command)
@@ -56,7 +57,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 
 	if (command == ENCODE_COMMAND)
 	{
-		const string content = Processing::read_from_file(source_file);
+		const string_view content = Processing::read_from_file(source_file);
 		const Algorithm::EncodingInfo encoding_info = Algorithm::encode(content);
 		Processing::encode_into_file(destination_file, encoding_info);
 
@@ -68,7 +69,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 	else if (command == DECODE_COMMAND)
 	{
 		const Algorithm::EncodingInfo encoding_info = Processing::decode_from_file(source_file);		
-		const string content = Algorithm::decode(encoding_info);
+		const string_view content = Algorithm::decode(encoding_info);
 		Processing::write_into_file(destination_file, content);
 	}
 	
