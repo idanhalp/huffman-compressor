@@ -1,7 +1,7 @@
 # Coding Challenges
 My solutions for challenges from https://codingchallenges.fyi.
 
-## Huffman Code
+## [Huffman Code](https://github.com/idanhalp/coding-challenges-fyi/tree/master/HuffmanCode)
 Solution for [this](https://codingchallenges.fyi/challenges/challenge-huffman) challenge.
 
 ### What does it do?
