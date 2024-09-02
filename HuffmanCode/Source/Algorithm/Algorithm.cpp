@@ -143,6 +143,9 @@ auto Algorithm::Auxiliary::encode_bits_as_characters(const vector<bool>& encoded
 			next_character_in_code |= bit;
 		}
 
+		// If `encoded_bits`.size() cannot be divided by `bits_in_char`,
+		// the last chunk will contain less than `bits_in_char` bits.
+		// Its bits need to be shifted left to ensure it is encoded like any other chunk.
 		if (chunk.size() < bits_in_char) [[unlikely]]
 		{
 			next_character_in_code <<= (bits_in_char - chunk.size());

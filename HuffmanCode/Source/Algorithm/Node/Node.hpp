@@ -25,6 +25,8 @@ struct Node
 			return;
 		}
 		
+		// The tree is a full binary tree.
+		// Both children of any internal node are guaranteed to exist.
 		for (Node* child : {left, right})
 		{
 			delete child;
