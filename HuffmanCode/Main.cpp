@@ -57,7 +57,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 
 	if (command == ENCODE_COMMAND)
 	{
-		const string_view content = Processing::read_from_file(source_file);
+		const string content = Processing::read_from_file(source_file);
 		const Algorithm::EncodingInfo encoding_info = Algorithm::encode(content);
 		Processing::encode_into_file(destination_file, encoding_info);
 
@@ -69,7 +69,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 	else if (command == DECODE_COMMAND)
 	{
 		const Algorithm::EncodingInfo encoding_info = Processing::decode_from_file(source_file);		
-		const string_view content = Algorithm::decode(encoding_info);
+		const string content = Algorithm::decode(encoding_info);
 		Processing::write_into_file(destination_file, content);
 	}
 	
