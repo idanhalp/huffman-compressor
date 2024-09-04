@@ -1,8 +1,8 @@
-# Huffman encoder
+# Huffman compressor
 A compression tool that uses Huffman code.
 
 ## What does it do?
-Encodes files into smaller files and decodes them back to their original state.
+Encodes text files into smaller files and decodes them back to their original state.
 
 Currently 3 modes are supported:
 * Encoding a file.
