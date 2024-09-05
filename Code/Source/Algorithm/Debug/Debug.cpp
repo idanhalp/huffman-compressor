@@ -1,5 +1,6 @@
 #include "Debug.hpp"
 #include <iostream>
+#include <print>
 #include <vector>
 
 using namespace std;
@@ -8,7 +9,7 @@ auto Debug::print_frequency_map(const Algorithm::frequency_map_t& frequency_map)
 {
 	for (const auto [character, frequency] : frequency_map)
 	{
-		cout << character << "(ASCII == " << static_cast<int>(character) << "): " << frequency << '\n';
+		println("{0} (ASCII == {1}): {2}", character, static_cast<int>(character), frequency);
 	}
 }
 
@@ -18,11 +19,11 @@ auto Debug::print_tree(const Node* root) -> void
 	{
 		if (node->is_leaf())
 		{
-			cout << "(" << node->frequency << ", " << node->character.value() << ") ";
+			print("({0}, {1}) ", node->frequency, node->character.value());
 		}
 		else
 		{
-			cout << "(" << node->frequency << ") ";
+			print("({0})", node->frequency);
 		}
 	};
 
@@ -30,7 +31,7 @@ auto Debug::print_tree(const Node* root) -> void
 
 	for (int level = 0; !current_level.empty(); ++level)
 	{
-		cout << "Level " << level << ": ";
+		print("Level {}: ", level);
 
 		vector<const Node*> next_level;
 
@@ -50,6 +51,9 @@ auto Debug::print_tree(const Node* root) -> void
 		cout << '\n';
 	}
 }
+
+// The following functions could use `std::print`.
+// However until printing formatted ranges is supported, I will stick to `std::cout`.
 
 auto Debug::print_letters_encodings(const unordered_map<char, vector<bool>>& letters_encodings) -> void
 {

@@ -3,7 +3,7 @@
 #include "Tests/Tests.hpp"
 #include <algorithm>
 #include <filesystem>
-#include <iostream>
+#include <print>
 #include <ranges>
 #include <string_view>
 
@@ -15,7 +15,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 
 	if (!has_arguments)
 	{
-		cout << "No arguments received!\n";
+		println("No arguments received!");
 
 		return EXIT_SUCCESS;
 	}
@@ -30,7 +30,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 
 	if (!is_legal_command)
 	{
-		cout << "Illegal command!\n";
+		println("Illegal command!");
 
 		return EXIT_SUCCESS;
 	}
@@ -40,7 +40,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 
 	if (!number_of_arguments_is_correct)
 	{
-		cout << "Incorrect number of arguments!\n";
+		println("Incorrect number of arguments!");
 	
 		return EXIT_SUCCESS;
 	}
@@ -64,7 +64,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 		const double compression_ratio = 1.0 * filesystem::file_size(destination_file) / filesystem::file_size(source_file);
 		const double data_rate_saving = 1.0 - compression_ratio;
 
-		cout << "Data rate saving is " << data_rate_saving << '\n';
+		println("Data-rate saving is {}", data_rate_saving);
 	}
 	else if (command == DECODE_COMMAND)
 	{
