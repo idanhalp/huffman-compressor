@@ -1,4 +1,4 @@
-# Huffman compressor
+# Huffman Compressor
 A compression tool that uses Huffman code.
 
 ## What does it do?
