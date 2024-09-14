@@ -41,6 +41,7 @@ auto main(const int argument_count, const char* arguments[]) -> int
 	if (!number_of_arguments_is_correct)
 	{
 		println("Incorrect number of arguments!");
+		println("Command '{0}' expects {1} arguments, but received {2}.", command, expected_num_of_arguments, argument_count);
 	
 		return EXIT_SUCCESS;
 	}
@@ -64,13 +65,16 @@ auto main(const int argument_count, const char* arguments[]) -> int
 		const double compression_ratio = 1.0 * filesystem::file_size(destination_file) / filesystem::file_size(source_file);
 		const double data_rate_saving = 1.0 - compression_ratio;
 
-		println("Data-rate saving is {}", data_rate_saving);
+		println("Encoded '{0}' into '{1}'.", source_file, destination_file);
+		println("Data-rate saving is {}.", data_rate_saving);
 	}
 	else if (command == DECODE_COMMAND)
 	{
 		const Algorithm::EncodingInfo encoding_info = Processing::decode_from_file(source_file);		
 		const string content = Algorithm::decode(encoding_info);
 		Processing::write_into_file(destination_file, content);
+
+		println("Decoded '{0}' into '{1}'.", source_file, destination_file);
 	}
 	
 	return EXIT_SUCCESS;
