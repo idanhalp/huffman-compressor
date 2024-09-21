@@ -8,8 +8,8 @@ using namespace std;
 auto Tests::Fixed::run_read_from_file_test() -> bool
 {
 	const string path_to_files = "./Tests/FixedTests/Files/";
-	const string file_suffix = ".txt";
 	const string file_name = "LesMiserables";
+	const string file_suffix = ".txt";
 	
 	const string input_file_name = path_to_files + file_name + file_suffix;
 	const string original_content = Processing::read_from_file(input_file_name);
